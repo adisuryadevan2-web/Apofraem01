@@ -3,1238 +3,182 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17122a">
+  <meta name="theme-color" content="#fff7f8">
   <title>Apofraem — Belajar Bahasa Jepang</title>
   <style>
     :root {
-      --violet: #9d7cff;
-      --violet-bright: #c0a7ff;
-      --violet-dark: #5d3bbd;
-      --ink: #f7f3ff;
-      --muted: #bbb3cb;
-      --bg: #17122a;
-      --bg-2: #211839;
-      --surface: #261d40;
-      --surface-2: #30264d;
-      --line: #47385f;
-      --pink: #db86af;
-      --shadow: 0 16px 44px rgba(4, 2, 12, .38);
+      --rose: #d76583;
+      --rose-dark: #a63d5c;
+      --rose-soft: #f7dce4;
+      --ink: #38252d;
+      --muted: #806b72;
+      --bg: #fff9f7;
+      --surface: #fff;
+      --surface-2: #fff0f2;
+      --line: #f0d7dc;
+      --green: #617c67;
+      --shadow: 0 16px 42px rgba(111, 58, 71, .12);
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 82% 8%, rgba(145, 99, 255, .19), transparent 25rem),
-        radial-gradient(circle at 5% 55%, rgba(118, 70, 168, .16), transparent 25rem),
-        linear-gradient(155deg, #17122a 0%, #201633 58%, #17122a 100%);
-      min-height: 100vh;
+      margin: 0; min-height: 100vh; color: var(--ink);
+      background: radial-gradient(circle at 90% 6%, #fbe4e9 0, transparent 24rem),
+        radial-gradient(circle at 4% 42%, #fff0e7 0, transparent 27rem), var(--bg);
       font-family: system-ui, -apple-system, "Noto Sans JP", sans-serif;
     }
-    button, input, select { font: inherit; }
+    button, input, select, textarea { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { cursor: pointer; }
     a { color: inherit; text-decoration: none; }
-
-    .wrap { width: min(1160px, calc(100% - 36px)); margin: auto; }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      background: rgba(23, 18, 42, .86);
-      border-bottom: 1px solid rgba(188, 160, 255, .12);
-      backdrop-filter: blur(16px);
-    }
-    .nav {
-      min-height: 74px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-size: 1.22rem;
-      font-weight: 850;
-      letter-spacing: -.02em;
-    }
-    .brand-mark {
-      width: 43px;
-      height: 43px;
-      display: grid;
-      place-items: center;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, .22);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 50% 50%, #b49bff 0 12%, transparent 13%),
-        conic-gradient(from 45deg, #7750d7, #b898ff, #6240ad, #7750d7);
-      box-shadow: 0 0 24px rgba(162, 126, 255, .38);
-      font-family: serif;
-      font-size: 1.55rem;
-      animation: spin 7s linear infinite;
-    }
-    .brand-mark span { display: block; animation: counter-spin 7s linear infinite; }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-    .nav-links a { transition: .18s; }
-    .nav-links a:hover { color: var(--violet-bright); }
-
-    .language {
-      display: flex;
-      gap: 3px;
-      padding: 4px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--surface);
-    }
-    .language button {
-      min-width: 43px;
-      padding: 7px 9px;
-      color: var(--muted);
-      background: transparent;
-      border: 0;
-      border-radius: 999px;
-      font-size: .78rem;
-      transition: .18s;
-    }
-    .language button.active {
-      color: white;
-      background: var(--violet-dark);
-      box-shadow: 0 4px 14px rgba(109, 68, 205, .35);
-    }
-
-    .hero {
-      min-height: 430px;
-      display: grid;
-      grid-template-columns: 1fr .95fr;
-      align-items: center;
-      gap: 38px;
-      padding: 56px 0 44px;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      color: #dacfff;
-      background: rgba(164, 132, 255, .12);
-      border: 1px solid rgba(183, 150, 255, .16);
-      border-radius: 999px;
-      font-size: .82rem;
-      font-weight: 750;
-    }
-    h1 {
-      max-width: 620px;
-      margin: 16px 0 14px;
-      font-size: clamp(2.55rem, 5.2vw, 4.65rem);
-      line-height: 1.04;
-      letter-spacing: -.055em;
-    }
-    h1 em {
-      color: var(--violet-bright);
-      font-style: normal;
-      text-shadow: 0 0 24px rgba(178, 145, 255, .18);
-    }
-    .intro {
-      max-width: 560px;
-      color: var(--muted);
-      line-height: 1.82;
-    }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
-    }
-    .btn {
-      min-height: 46px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0 17px;
-      color: white;
-      background: linear-gradient(135deg, #8d68e9, #6540b7);
-      border: 1px solid #9675e9;
-      border-radius: 11px;
-      font-weight: 750;
-      transition: transform .18s, box-shadow .18s, filter .18s;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(130, 91, 213, .3);
-      filter: brightness(1.08);
-    }
-    .btn:active { transform: scale(.96); }
-    .btn.secondary {
-      color: var(--ink);
-      background: rgba(255, 255, 255, .04);
-      border-color: var(--line);
-    }
-    .btn.secondary:hover { border-color: var(--violet); }
-    .btn.small {
-      min-height: 38px;
-      padding: 0 12px;
-      font-size: .84rem;
-    }
-
-    .scene {
-      position: relative;
-      min-height: 355px;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(193, 169, 255, .16);
-      border-radius: 28px;
-      background:
-        linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px),
-        linear-gradient(145deg, #342454, #1c1734 70%, #10101f);
-      background-size: 32px 32px, 32px 32px, auto;
-      box-shadow: var(--shadow);
-    }
-    .moon {
-      position: absolute;
-      top: 42px;
-      right: 58px;
-      width: 118px;
-      height: 118px;
-      border-radius: 50%;
-      background: #d8cfff;
-      box-shadow: 0 0 52px rgba(202, 181, 255, .34);
-    }
-    .crater {
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(126, 108, 178, .15);
-    }
-    .c1 { top: 24px; left: 28px; }
-    .c2 { right: 20px; bottom: 31px; width: 12px; height: 12px; }
-    .mountain {
-      position: absolute;
-      bottom: -10px;
-      width: 120%;
-      height: 155px;
-      background: #3a315d;
-      clip-path: polygon(0 100%, 0 68%, 24% 34%, 43% 66%, 65% 18%, 100% 72%, 100% 100%);
-    }
-    .mountain.front {
-      height: 100px;
-      background: #242842;
-      opacity: .96;
-      transform: scaleX(-1);
-    }
-    .pagoda {
-      position: absolute;
-      z-index: 2;
-      bottom: 75px;
-      left: 54px;
-      width: 72px;
-      height: 92px;
-      color: #c3aaf9;
-      opacity: .78;
-    }
-    .pagoda::before {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 25px;
-      width: 25px;
-      height: 58px;
-      background: #18182b;
-      clip-path: polygon(20% 0,80% 0,100% 100%,0 100%);
-    }
-    .roof {
-      position: absolute;
-      left: 0;
-      width: 72px;
-      height: 22px;
-      background: #18182b;
-      clip-path: polygon(50% 0,100% 62%,93% 70%,50% 45%,7% 70%,0 62%);
-    }
-    .roof.r1 { top: 4px; }
-    .roof.r2 { top: 28px; width: 62px; left: 5px; }
-
-    .dragon {
-      position: absolute;
-      z-index: 5;
-      width: 210px;
-      height: 95px;
-      left: -240px;
-      top: 132px;
-      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .35));
-      animation: dragon-fly 10s linear infinite;
-    }
-    .dragon-body {
-      position: absolute;
-      width: 145px;
-      height: 48px;
-      left: 42px;
-      top: 30px;
-      border: 9px solid #9c75dd;
-      border-right-color: transparent;
-      border-bottom-color: transparent;
-      border-radius: 70% 20% 30% 70%;
-      transform: rotate(-8deg);
-    }
-    .dragon-head {
-      position: absolute;
-      right: 0;
-      top: 21px;
-      width: 47px;
-      height: 38px;
-      background: #a480e2;
-      border-radius: 60% 70% 55% 35%;
-      transform: rotate(8deg);
-    }
-    .dragon-head::before {
-      content: "";
-      position: absolute;
-      right: -8px;
-      top: 18px;
-      width: 23px;
-      height: 9px;
-      background: #bba1eb;
-      clip-path: polygon(0 0,100% 50%,0 100%);
-    }
-    .dragon-head::after {
-      content: "•";
-      position: absolute;
-      right: 11px;
-      top: 4px;
-      color: #201532;
-      font-size: 1.2rem;
-    }
-    .dragon-horn {
-      position: absolute;
-      width: 25px;
-      height: 15px;
-      right: 18px;
-      top: 7px;
-      border-top: 5px solid #dacaff;
-      border-radius: 100% 100% 0 0;
-      transform: rotate(-28deg);
-    }
-    .dragon-wing {
-      position: absolute;
-      left: 77px;
-      top: 2px;
-      width: 75px;
-      height: 48px;
-      background: rgba(196, 166, 255, .78);
-      clip-path: polygon(0 100%, 20% 23%, 48% 0, 56% 38%, 100% 25%, 72% 78%, 42% 65%);
-      transform-origin: bottom left;
-      animation: wing 1.2s ease-in-out infinite alternate;
-    }
-    .dragon-tail {
-      position: absolute;
-      left: 2px;
-      top: 47px;
-      width: 75px;
-      height: 38px;
-      border: 7px solid #7e59bc;
-      border-left-color: transparent;
-      border-bottom-color: transparent;
-      border-radius: 50%;
-      transform: rotate(25deg);
-    }
-
-    .stars span {
-      position: absolute;
-      color: #e6dcff;
-      animation: twinkle 1.8s infinite alternate;
-    }
-    .stars span:nth-child(1) { left: 20%; top: 20%; }
-    .stars span:nth-child(2) { right: 24%; top: 28%; animation-delay: .5s; }
-    .stars span:nth-child(3) { left: 15%; bottom: 24%; animation-delay: 1s; }
-
-    section { padding: 38px 0; }
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-    h2 {
-      margin: 0;
-      font-size: clamp(1.55rem, 3vw, 2.15rem);
-      letter-spacing: -.04em;
-    }
-    .section-head p {
-      max-width: 620px;
-      margin: 6px 0 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .jlpt-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .level-tab {
-      min-width: 62px;
-      min-height: 42px;
-      color: #d8d1e7;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      font-weight: 850;
-      transition: .18s;
-    }
-    .level-tab:hover,
-    .level-tab.active {
-      color: white;
-      background: var(--violet-dark);
-      border-color: #9e83e8;
-      transform: translateY(-2px);
-      box-shadow: 0 7px 18px rgba(93, 59, 189, .25);
-    }
-
-    .level-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    .lesson-card {
-      min-height: 158px;
-      padding: 16px;
-      text-align: left;
-      color: var(--ink);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      box-shadow: 0 7px 20px rgba(5, 3, 14, .14);
-      transition: .22s;
-    }
-    .lesson-card:hover {
-      transform: translateY(-4px);
-      border-color: #8065c2;
-      box-shadow: 0 12px 28px rgba(5, 3, 14, .28);
-    }
-    .lesson-card.selected {
-      border: 2px solid var(--violet);
-      background: #32244f;
-      box-shadow: 0 0 0 4px rgba(157, 124, 255, .09);
-    }
-    .lesson-icon {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #584083, #8062bb);
-      color: #f2edff;
-      font-family: serif;
-      font-size: 1.35rem;
-    }
-    .lesson-card h3 { margin: 12px 0 5px; font-size: .98rem; }
-    .lesson-card p { min-height: 40px; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.55; }
-    .lesson-status { display: block; margin-top: 9px; color: var(--violet-bright); font-size: .76rem; font-weight: 800; }
-
-    .lesson-panel {
-      display: none;
-      margin-top: 14px;
-      padding: 20px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      box-shadow: var(--shadow);
-    }
-    .lesson-panel.open { display: block; animation: panel-in .35s ease both; }
-    .panel-top {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
-      gap: 14px;
-    }
-    .panel-top h3 { margin: 0; font-size: 1.35rem; }
-    .panel-top p { margin: 6px 0 0; color: var(--muted); line-height: 1.65; }
-    .panel-content { margin-top: 16px; }
-
-    .lesson-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-    }
-    .lesson-item {
-      min-height: 78px;
-      display: grid;
-      place-items: center;
-      padding: 8px;
-      text-align: center;
-      color: var(--ink);
-      background: var(--surface-2);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      transition: .16s;
-    }
-    .lesson-item:hover {
-      color: white;
-      background: var(--violet-dark);
-      transform: translateY(-3px) scale(1.02);
-    }
-    .lesson-item strong { display: block; font-family: serif; font-size: 1.35rem; }
-    .lesson-item small { display: block; margin-top: 4px; color: var(--muted); }
-    .lesson-item:hover small { color: #eee7ff; }
-
-    .example-list { display: grid; gap: 9px; }
-    .example {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 13px;
-      background: var(--surface-2);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-    }
-    .example strong { font-family: serif; }
-    .example span { color: var(--muted); font-size: .88rem; text-align: right; }
-    .lesson-note {
-      margin-top: 12px;
-      padding: 12px 13px;
-      color: #ded4f5;
-      background: rgba(157, 124, 255, .08);
-      border-left: 3px solid var(--violet);
-      border-radius: 6px;
-      line-height: 1.7;
-    }
-    .grammar-box {
-      padding: 14px;
-      background: var(--surface-2);
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      line-height: 1.78;
-    }
-    .grammar-box code {
-      padding: 3px 7px;
-      color: #e1d8ff;
-      background: #483764;
-      border-radius: 5px;
-    }
-
-    .flash-card {
-      min-height: 132px;
-      display: grid;
-      place-items: center;
-      margin-top: 14px;
-      padding: 17px;
-      text-align: center;
-      background: linear-gradient(145deg, #30264d, #3a2d57);
-      border: 1px solid #594773;
-      border-radius: 13px;
-      cursor: pointer;
-      transition: .2s;
-    }
-    .flash-card:hover {
-      border-color: var(--violet);
-      box-shadow: 0 12px 28px rgba(6, 3, 17, .24);
-    }
-    .flash-card.big { font-size: 2.15rem; }
-    .flash-card.small { color: var(--muted); }
-
-    .tools { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 14px; }
-    .search, .filter {
-      min-height: 43px;
-      padding: 0 12px;
-      color: var(--ink);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      outline: none;
-    }
-    .search { flex: 1 1 230px; }
-    .search:focus, .filter:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(157, 124, 255, .11); }
-    .word-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; }
-    .word-card {
-      padding: 15px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      transition: .2s;
-    }
-    .word-card:hover { transform: translateY(-3px); border-color: #7761aa; box-shadow: var(--shadow); }
-    .word-top { display: flex; justify-content: space-between; gap: 10px; }
-    .japanese { font-family: serif; font-size: 1.7rem; }
-    .romaji { color: var(--muted); font-size: .79rem; }
-    .meaning { margin-top: 11px; font-weight: 760; }
-    .heart { border: 0; background: transparent; color: #958ba7; font-size: 1.35rem; }
-    .heart.saved { color: var(--pink); }
-    .empty { grid-column: 1/-1; padding: 24px; color: var(--muted); text-align: center; border: 1px dashed var(--line); border-radius: 12px; }
-
-    .quiz-box {
-      padding: 22px;
-      background: #302445;
-      border: 1px solid #514164;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
-    .quiz-question { margin: 11px 0; font-family: serif; font-size: 1.45rem; }
-    .quiz-choices { display: flex; flex-wrap: wrap; gap: 8px; }
-    .choice {
-      padding: 10px 13px;
-      color: var(--ink);
-      background: #3a2f51;
-      border: 1px solid #59486e;
-      border-radius: 9px;
-      transition: .16s;
-    }
-    .choice:hover { border-color: var(--violet-bright); transform: translateY(-2px); }
-    .choice.correct { color: #caffdf; background: #315847; border-color: #70bb91; }
-    .choice.incorrect { color: #ffd1dc; background: #663849; border-color: #b86d82; }
-    .quiz-feedback { min-height: 24px; margin-top: 11px; color: #dcd2ef; }
-
-    .daily {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 20px 22px;
-      background: linear-gradient(110deg, #382657, #5c3f91);
-      border: 1px solid #72549f;
-      border-radius: 16px;
-    }
-    .daily p { margin: 5px 0 0; color: #ccc2df; }
-    .daily-word { font-family: serif; font-size: 1.8rem; }
-
-    footer {
-      margin-top: 30px;
-      padding: 23px 0;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      font-size: .86rem;
-    }
-    .toast {
-      position: fixed;
-      z-index: 50;
-      right: 18px;
-      bottom: 18px;
-      max-width: calc(100% - 36px);
-      padding: 12px 15px;
-      color: white;
-      background: #3a2c58;
-      border: 1px solid #72559a;
-      border-radius: 10px;
-      box-shadow: var(--shadow);
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: .22s;
-    }
-    .toast.show { opacity: 1; transform: translateY(0); }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes counter-spin { to { transform: rotate(-360deg); } }
-    @keyframes dragon-fly {
-      0% { left: -240px; top: 205px; transform: scale(.78) rotate(-5deg); }
-      35% { top: 115px; transform: scale(1) rotate(3deg); }
-      70% { top: 145px; transform: scale(.88) rotate(-2deg); }
-      100% { left: calc(100% + 30px); top: 75px; transform: scale(.72) rotate(4deg); }
-    }
-    @keyframes wing { to { transform: rotate(-18deg) scaleY(.82); } }
-    @keyframes twinkle { to { opacity: .3; transform: scale(.75); } }
-    @keyframes panel-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr .85fr; }
-      .level-grid { grid-template-columns: repeat(2, 1fr); }
-      .lesson-grid { grid-template-columns: repeat(3, 1fr); }
-      .word-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 680px) {
-      .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; padding-top: 38px; }
-      .scene { min-height: 300px; }
-      .dragon { animation-duration: 8s; }
-      .level-grid { grid-template-columns: repeat(2, 1fr); }
-      .lesson-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 430px) {
-      .wrap { width: calc(100% - 26px); }
-      .word-grid, .level-grid { grid-template-columns: 1fr; }
-      .example, .daily { align-items: start; flex-direction: column; }
-      .panel-top { flex-direction: column; }
-      .daily-word { white-space: normal; }
-    }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: auto; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,249,247,.9); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; font-weight: 850; }
+    .brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; color: white; font-size: 1.45rem; background: linear-gradient(145deg, #ed9caf, #c65373); box-shadow: 0 5px 15px #d7658333; }
+    .nav-links { display: flex; gap: 22px; color: var(--muted); font-size: .92rem; }
+    .nav-links a:hover { color: var(--rose-dark); }
+    .nav-actions { display: flex; align-items: center; gap: 9px; }
+    .btn { min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 15px; color: white; background: linear-gradient(135deg, #db7891, #bd4d6c); border: 1px solid #d87891; border-radius: 11px; font-weight: 750; transition: .18s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px #b64b672b; }
+    .btn.secondary { color: var(--ink); background: white; border-color: var(--line); }
+    .btn.small { min-height: 36px; padding: 0 12px; font-size: .86rem; }
+    .language { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: white; }
+    .language button { border: 0; background: transparent; color: var(--muted); padding: 6px 9px; border-radius: 999px; font-size: .78rem; }
+    .language button.active { background: var(--rose-dark); color: white; }
+    .profile-trigger { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; color: var(--ink); border: 1px solid var(--line); border-radius: 999px; background: white; font-weight: 700; }
+    .avatar { width: 34px; height: 34px; display: grid; place-items: center; object-fit: cover; border-radius: 50%; background: var(--rose-soft); color: var(--rose-dark); }
+    .hero { min-height: 410px; display: grid; grid-template-columns: 1fr .9fr; align-items: center; gap: 40px; padding: 52px 0 40px; }
+    .eyebrow { display: inline-flex; gap: 8px; padding: 7px 12px; color: var(--rose-dark); background: #fbe9ed; border: 1px solid #f4d4dd; border-radius: 999px; font-size: .84rem; font-weight: 750; }
+    h1 { max-width: 620px; margin: 17px 0 14px; font-size: clamp(2.5rem, 5vw, 4.4rem); line-height: 1.05; letter-spacing: -.05em; }
+    h1 em { color: var(--rose); font-style: normal; }
+    .intro, .section-head p { color: var(--muted); line-height: 1.75; }
+    .intro { max-width: 560px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 23px; }
+    .scene { min-height: 340px; position: relative; overflow: hidden; border: 1px solid #f0d2d8; border-radius: 27px; background: linear-gradient(155deg,#fff1f3 0%,#ffe4e7 48%,#f8cfd8 100%); box-shadow: var(--shadow); }
+    .sun { position: absolute; width: 112px; height: 112px; top: 38px; right: 56px; border-radius: 50%; background: #fffaf0; box-shadow: 0 0 46px #fff9e6aa; }
+    .fuji { position: absolute; bottom: 0; left: 0; width: 100%; height: 175px; background: linear-gradient(150deg,#a8bcc1,#718e91); clip-path: polygon(0 100%,0 79%,18% 68%,42% 5%,62% 66%,78% 48%,100% 74%,100% 100%); }
+    .fuji::before { content:""; position:absolute; left:31%; top:8px; width:28%; height:68px; background:#fffaf6; clip-path:polygon(39% 0,61% 0,100% 72%,72% 54%,59% 79%,50% 62%,38% 79%,24% 54%,0 72%); }
+    .hills { position: absolute; bottom: -34px; width: 120%; height: 112px; left: -10%; border-radius: 50% 50% 0 0; background: #879d85; }
+    .hills.front { bottom: -58px; left: 26%; background: #667f6d; }
+    .sakura-tree { position: absolute; z-index: 2; left: 34px; bottom: 60px; width: 120px; height: 170px; }
+    .trunk { position:absolute; left:53px; bottom:0; width:17px; height:118px; background:#72534a; border-radius:10px 10px 0 0; transform:rotate(5deg); }
+    .branch { position:absolute; height:8px; width:71px; left:49px; top:73px; background:#72534a; transform:rotate(-30deg); border-radius:10px; }
+    .blossom { position:absolute; width:76px; height:60px; border-radius:50%; background:radial-gradient(circle at 22% 55%,#f4a8ba 0 10px,transparent 11px),radial-gradient(circle at 47% 25%,#f9c4cf 0 15px,transparent 16px),radial-gradient(circle at 73% 48%,#ee9bb0 0 14px,transparent 15px),radial-gradient(circle at 43% 72%,#f6b6c4 0 14px,transparent 15px); }
+    .b1 { left:3px; top:36px; transform:scale(1.2); }.b2 { left:48px; top:5px; transform:scale(1.1); }.b3 { left:42px; top:67px; }
+    .petals { position:absolute; inset:0; z-index:4; pointer-events:none; }
+    .petals span { position:absolute; top:-20px; color:#d76583; opacity:.72; animation:fall 8s linear infinite; }
+    .petals span:nth-child(1){left:18%;animation-delay:0s}.petals span:nth-child(2){left:42%;animation-delay:2s}.petals span:nth-child(3){left:68%;animation-delay:4s}.petals span:nth-child(4){left:85%;animation-delay:1s}
+    @keyframes fall { to { transform:translate(40px,390px) rotate(260deg); opacity:.15; } }
+    section { padding: 34px 0; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:17px; }
+    h2 { margin:0; font-size:clamp(1.55rem,3vw,2.1rem); letter-spacing:-.04em; }
+    .section-head p { margin:6px 0 0; }
+    .jlpt-tabs, .tools { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+    .level-tab { min-width:62px; min-height:40px; color:var(--rose-dark); background:white; border:1px solid var(--line); border-radius:10px; font-weight:800; }
+    .level-tab.active, .level-tab:hover { color:white; background:var(--rose); border-color:var(--rose); }
+    .level-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .lesson-card { min-height:138px; padding:15px; text-align:left; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:15px; box-shadow:0 6px 18px #783c4a0b; transition:.2s; }
+    .lesson-card:hover,.lesson-card.selected { transform:translateY(-3px); border-color:var(--rose); box-shadow:var(--shadow); }
+    .lesson-icon { width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--surface-2);color:var(--rose-dark);font-family:serif;font-size:1.35rem; }
+    .lesson-card h3 { margin:10px 0 5px; font-size:.98rem; }.lesson-card p { margin:0;color:var(--muted);font-size:.82rem; }
+    .lesson-panel { display:none; margin-top:14px; padding:19px; background:white; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); }.lesson-panel.open { display:block; }
+    .lesson-panel h3 { margin:0 0 6px; }.lesson-panel p { color:var(--muted); line-height:1.65; }
+    .lesson-note { padding:12px; background:#fff2f4; border-left:3px solid var(--rose); border-radius:6px; line-height:1.65; }
+    .search,.filter,.field { min-height:42px; padding:0 12px; color:var(--ink); background:white; border:1px solid var(--line); border-radius:10px; outline:none; }
+    .search { flex:1 1 220px; }.search:focus,.filter:focus,.field:focus,textarea:focus { border-color:var(--rose); box-shadow:0 0 0 3px #d765831c; }
+    .word-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
+    .word-card { padding:15px; background:white; border:1px solid var(--line); border-radius:13px; transition:.2s; }
+    .word-card:hover { transform:translateY(-3px); box-shadow:var(--shadow); }
+    .word-top { display:flex; justify-content:space-between; gap:10px; }.japanese { font-family:serif;font-size:1.7rem; }.romaji { color:var(--muted);font-size:.8rem; }.meaning { margin-top:10px;font-weight:750; }
+    .word-actions { display:flex;align-items:center;gap:6px; }.icon-btn { border:0;background:transparent;color:var(--rose-dark);font-size:1.2rem;border-radius:8px;padding:5px; }.icon-btn:hover { background:var(--surface-2); }.heart.saved { color:#d34f76; }
+    .empty { grid-column:1/-1;padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px; }
+    .quiz-box { padding:21px;background:white;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow); }.quiz-question { margin:13px 0;font-family:serif;font-size:1.5rem; }.quiz-choices { display:flex;flex-wrap:wrap;gap:8px; }.choice { padding:10px 13px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:9px; }.choice.correct { color:#315d3b;background:#e7f5e8; }.choice.incorrect { color:#913c53;background:#fbe5eb; }.quiz-feedback { min-height:26px;margin-top:10px;color:var(--muted); }
+    .daily { display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px 22px;background:linear-gradient(110deg,#f9e3e8,#fff4eb);border:1px solid var(--line);border-radius:16px; }.daily p { margin:5px 0 0;color:var(--muted); }.daily-word { font:1.8rem Georgia,serif; }.daily-word small { display:block;font: .82rem system-ui;color:var(--muted); }
+    footer { margin-top:24px;padding:22px 0;color:var(--muted);border-top:1px solid var(--line);font-size:.87rem; }
+    dialog { width:min(480px,calc(100% - 28px)); padding:0; color:var(--ink); background:white; border:1px solid var(--line); border-radius:18px; box-shadow:0 24px 80px #43232d40; }
+    dialog::backdrop { background:#38252d77;backdrop-filter:blur(3px); }.dialog-content { padding:22px; }.dialog-head { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px; }.dialog-head h2 { font-size:1.4rem; }.close-btn { border:0;background:transparent;color:var(--muted);font-size:1.5rem; }
+    .profile-preview { display:flex;align-items:center;gap:14px;margin:12px 0 18px; }.profile-photo { width:82px;height:82px;object-fit:cover;border-radius:50%;background:var(--surface-2);border:3px solid white;box-shadow:0 0 0 1px var(--line); }.profile-fields { display:grid;gap:12px; }.profile-fields label { display:grid;gap:6px;font-size:.88rem;font-weight:700; }.profile-fields textarea { min-height:80px;padding:10px 12px;color:var(--ink);border:1px solid var(--line);border-radius:10px;resize:vertical; }.photo-input { max-width:100%;font-size:.83rem;color:var(--muted); }.dialog-actions { display:flex;justify-content:flex-end;gap:8px;margin-top:18px; }
+    .toast { position:fixed;z-index:40;right:18px;bottom:18px;max-width:calc(100% - 36px);padding:12px 15px;color:white;background:#74414e;border-radius:10px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.2s; }.toast.show { opacity:1;transform:translateY(0); }
+    @media(max-width:900px){.level-grid{grid-template-columns:repeat(2,1fr)}.word-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.nav-links{display:none}.hero{grid-template-columns:1fr;padding-top:34px}.scene{min-height:290px}.section-head{align-items:start;flex-direction:column}.word-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:430px){.wrap{width:calc(100% - 26px)}.word-grid,.level-grid{grid-template-columns:1fr}.profile-trigger .profile-name{display:none}.daily{align-items:start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#" aria-label="Apofraem">
-        <span class="brand-mark"><span>龍</span></span>
-        <span>apofraem</span>
-      </a>
-      <nav class="nav-links" aria-label="Navigasi">
-        <a href="#materi" data-i18n="navLessons">Materi JLPT</a>
-        <a href="#kosakata" data-i18n="navWords">Kosakata</a>
-        <a href="#kuis" data-i18n="navQuiz">Kuis</a>
-      </nav>
-      <div class="language" aria-label="Pilih bahasa">
-        <button type="button" class="active" data-lang="id">ID</button>
-        <button type="button" data-lang="ja">日本語</button>
-      </div>
+  <header><div class="wrap nav">
+    <a class="brand" href="#" aria-label="Apofraem"><span class="brand-mark" aria-hidden="true">桜</span><span>apofraem</span></a>
+    <nav class="nav-links" aria-label="Navigasi"><a href="#materi">Materi JLPT</a><a href="#kosakata">Kosakata</a><a href="#kuis">Kuis</a></nav>
+    <div class="nav-actions">
+      <div class="language" aria-label="Pilih bahasa"><button type="button" class="active" data-lang="id">ID</button><button type="button" data-lang="ja">日本語</button></div>
+      <button class="profile-trigger" id="openProfile" type="button" aria-label="Buka profil"><img class="avatar" id="navAvatar" alt=""><span class="profile-name" id="navName">Profil</span></button>
     </div>
-  </header>
-
+  </div></header>
   <main>
-    <section class="wrap hero">
-      <div>
-        <span class="eyebrow" data-i18n="eyebrow">🐉 JLPT N5 hingga N1 dalam satu perjalanan</span>
-        <h1 data-i18n="heroTitle">Kuasai bahasa Jepang <em>langkah demi langkah.</em></h1>
-        <p class="intro" data-i18n="intro">Pelajari kosakata, tata bahasa, kanji, membaca, mendengar, dan pola ujian dari level pemula sampai lanjutan.</p>
-        <div class="actions">
-          <a class="btn" href="#materi" data-i18n="startButton">Pilih level JLPT ↓</a>
-          <a class="btn secondary" href="#kosakata" data-i18n="wordsButton">Cari kosakata</a>
-        </div>
-      </div>
+    <section class="wrap hero"><div>
+      <span class="eyebrow">🌸 Perjalanan belajar JLPT N5 hingga N1</span>
+      <h1>Kuasai bahasa Jepang <em>di bawah sakura.</em></h1>
+      <p class="intro">Belajar kosakata, kanji, tata bahasa, dan ungkapan Jepang dalam suasana musim sakura. Sedikit demi sedikit, setiap hari.</p>
+      <div class="actions"><a class="btn" href="#materi">Pilih level JLPT ↓</a><a class="btn secondary" href="#kosakata">Jelajahi kosakata</a></div>
+    </div><div class="scene" role="img" aria-label="Ilustrasi Gunung Fuji dan pohon sakura">
+      <div class="sun"></div><div class="fuji"></div><div class="hills"></div><div class="hills front"></div>
+      <div class="sakura-tree"><div class="trunk"></div><div class="branch"></div><i class="blossom b1"></i><i class="blossom b2"></i><i class="blossom b3"></i></div>
+      <div class="petals" aria-hidden="true"><span>🌸</span><span>✿</span><span>🌸</span><span>✿</span></div>
+    </div></section>
 
-      <div class="scene" role="img" aria-label="Ilustrasi Jepang dengan naga terbang">
-        <div class="moon"><span class="crater c1"></span><span class="crater c2"></span></div>
-        <div class="stars"><span>✦</span><span>✧</span><span>✦</span></div>
-        <div class="mountain"></div>
-        <div class="mountain front"></div>
-        <div class="pagoda"><span class="roof r1"></span><span class="roof r2"></span></div>
+    <section class="wrap" id="materi"><div class="section-head"><div><h2>Materi JLPT N5—N1</h2><p>Pilih level dan buka topik belajar. Dengarkan pelafalan dengan suara perempuan Jepang jika tersedia di perangkatmu.</p></div></div><div class="jlpt-tabs" id="levelTabs" aria-label="Pilihan level JLPT"></div><div class="level-grid" id="lessonGrid"></div><div class="lesson-panel" id="lessonPanel" aria-live="polite"></div></section>
 
-        <div class="dragon" aria-hidden="true">
-          <div class="dragon-tail"></div>
-          <div class="dragon-body"></div>
-          <div class="dragon-wing"></div>
-          <div class="dragon-head"><span class="dragon-horn"></span></div>
-        </div>
-      </div>
+    <section class="wrap" id="kosakata"><div class="section-head"><div><h2>Pustaka kosakata</h2><p>Cari kata, simpan favorit, atau tekan tombol suara untuk mendengarkan pelafalan Jepang.</p></div></div>
+      <div class="tools"><input id="searchInput" class="search" type="search" placeholder="Cari kata atau artinya…" aria-label="Cari kosakata"><select id="categoryFilter" class="filter" aria-label="Filter kategori"></select><select id="levelFilter" class="filter" aria-label="Filter level"><option value="all">N5—N1</option><option>N5</option><option>N4</option><option>N3</option><option>N2</option><option>N1</option></select><button class="btn secondary small" id="favoritesButton" type="button">♡ Favorit</button></div><div class="word-grid" id="wordGrid"></div>
     </section>
 
-    <section class="wrap" id="materi">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="lessonsTitle">Materi JLPT N5—N1</h2>
-          <p data-i18n="lessonsDesc">Pilih level, lalu pilih materi untuk membuka ringkasan dan latihan.</p>
-        </div>
-      </div>
+    <section class="wrap" id="kuis"><div class="section-head"><div><h2>Kuis cepat</h2><p>Latih kosakata pilihan dari seluruh level JLPT.</p></div><button class="btn" id="startQuiz" type="button">Mulai kuis →</button></div><div class="quiz-box" id="quizBox" hidden><div id="quizScore"></div><div class="quiz-question" id="quizQuestion"></div><div class="quiz-choices" id="quizChoices"></div><div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div><button class="btn secondary small" id="nextQuiz" type="button" hidden>Soal berikutnya →</button></div></section>
 
-      <div class="jlpt-tabs" id="levelTabs" aria-label="Pilihan level JLPT"></div>
-      <div class="level-grid" id="lessonGrid"></div>
-      <div class="lesson-panel" id="lessonPanel" aria-live="polite"></div>
-    </section>
-
-    <section class="wrap" id="kosakata">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="vocabTitle">Pustaka kosakata</h2>
-          <p data-i18n="vocabDesc">Cari kata dan simpan favoritmu. Kata dapat difilter berdasarkan level JLPT.</p>
-        </div>
-      </div>
-
-      <div class="tools">
-        <input id="searchInput" class="search" type="search" data-placeholder="search" placeholder="Cari kata atau artinya…">
-        <select id="categoryFilter" class="filter" aria-label="Filter kategori"></select>
-        <select id="levelFilter" class="filter" aria-label="Filter level">
-          <option value="all">N5—N1</option>
-          <option>N5</option><option>N4</option><option>N3</option><option>N2</option><option>N1</option>
-        </select>
-        <button class="btn secondary small" id="favoritesButton" type="button" data-i18n="favorites">♡ Favorit</button>
-      </div>
-      <div class="word-grid" id="wordGrid"></div>
-    </section>
-
-    <section class="wrap" id="kuis">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="quizTitle">Kuis cepat</h2>
-          <p data-i18n="quizDesc">Latih kosakata pilihan dari seluruh level JLPT.</p>
-        </div>
-        <button class="btn" id="startQuiz" type="button" data-i18n="startQuiz">Mulai kuis →</button>
-      </div>
-      <div class="quiz-box" id="quizBox" hidden>
-        <div id="quizScore"></div>
-        <div class="quiz-question" id="quizQuestion"></div>
-        <div class="quiz-choices" id="quizChoices"></div>
-        <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
-        <button class="btn secondary small" id="nextQuiz" type="button" hidden data-i18n="nextQuestion">Soal berikutnya →</button>
-      </div>
-    </section>
-
-    <section class="wrap">
-      <div class="daily">
-        <div>
-          <strong data-i18n="dailyTitle">Ungkapan hari ini</strong>
-          <p data-i18n="dailyDesc">Gunakan ungkapan ini dalam percakapan harian.</p>
-        </div>
-        <div class="daily-word">一生懸命 <small style="font: .85rem system-ui; color:#ccc2df">— isshōkenmei · dengan sepenuh hati</small></div>
-      </div>
-    </section>
+    <section class="wrap"><div class="daily"><div><strong>Ungkapan hari ini</strong><p>Gunakan ungkapan ini dalam percakapan harian.</p></div><div class="daily-word">一生懸命<small>isshōkenmei · dengan sepenuh hati</small></div><button class="btn secondary small speak-btn" data-speak="一生懸命">🔊 Dengarkan</button></div></section>
   </main>
+  <footer><div class="wrap">© <span id="year"></span> apofraem · Belajar sedikit, setiap hari 🌸</div></footer>
 
-  <footer>
-    <div class="wrap">© <span id="year"></span> apofraem · <span data-i18n="footer">Belajar sedikit, setiap hari 🌸</span></div>
-  </footer>
+  <dialog id="profileDialog"><form class="dialog-content" id="profileForm"><div class="dialog-head"><h2>Profil belajar 🌸</h2><button class="close-btn" id="closeProfile" type="button" aria-label="Tutup">×</button></div>
+    <div class="profile-preview"><img id="profilePhoto" class="profile-photo" alt="Pratinjau foto profil"><div><strong>Pilih foto profil</strong><p style="margin:5px 0;color:var(--muted);font-size:.85rem">Pilih gambar dari galeri perangkatmu.</p><input class="photo-input" id="photoPicker" type="file" accept="image/*" aria-label="Pilih foto dari galeri"></div></div>
+    <div class="profile-fields"><label>Nama tampilan<input class="field" id="profileName" maxlength="40" placeholder="Nama kamu"></label><label>Bio singkat<textarea id="profileBio" maxlength="140" placeholder="Ceritakan target belajar bahasa Jepangmu"></textarea></label><label>Suara latihan<select class="field" id="voiceSetting"><option value="female">Suara perempuan Jepang saja</option><option value="off">Matikan suara</option></select></label></div>
+    <div class="dialog-actions"><button class="btn secondary" id="cancelProfile" type="button">Batal</button><button class="btn" type="submit">Simpan profil</button></div>
+  </form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    const translations = {
-      id: {
-        navLessons:"Materi JLPT", navWords:"Kosakata", navQuiz:"Kuis",
-        eyebrow:"🐉 JLPT N5 hingga N1 dalam satu perjalanan",
-        heroTitle:"Kuasai bahasa Jepang <em>langkah demi langkah.</em>",
-        intro:"Pelajari kosakata, tata bahasa, kanji, membaca, mendengar, dan pola ujian dari level pemula sampai lanjutan.",
-        startButton:"Pilih level JLPT ↓", wordsButton:"Cari kosakata",
-        lessonsTitle:"Materi JLPT N5—N1", lessonsDesc:"Pilih level, lalu pilih materi untuk membuka ringkasan dan latihan.",
-        vocabTitle:"Pustaka kosakata", vocabDesc:"Cari kata dan simpan favoritmu. Kata dapat difilter berdasarkan level JLPT.",
-        search:"Cari kata atau artinya…", favorites:"♡ Favorit", allCategories:"Semua kategori",
-        everyday:"Sehari-hari", greeting:"Salam", travel:"Perjalanan", study:"Sekolah",
-        quizTitle:"Kuis cepat", quizDesc:"Latih kosakata pilihan dari seluruh level JLPT.",
-        startQuiz:"Mulai kuis →", nextQuestion:"Soal berikutnya →",
-        dailyTitle:"Ungkapan hari ini", dailyDesc:"Gunakan ungkapan ini dalam percakapan harian.",
-        footer:"Belajar sedikit, setiap hari 🌸", noResults:"Tidak ada kosakata yang cocok.",
-        completed:"✓ Selesai", openLesson:"Buka materi →", markComplete:"Tandai selesai ✓",
-        completeToast:"Materi ditandai selesai! 🌸",
-        quizPrompt:"Apa arti kata ini?", correct:"Benar! Mantap 🎉",
-        incorrect:"Belum tepat. Jawaban:", score:"Skor",
-        flipCard:"Tekan kartu untuk membalik",
-        levelOverview:"Ringkasan level",
-        listen:"Mendengarkan", reading:"Membaca", grammar:"Tata bahasa",
-        kanji:"Kanji", vocabulary:"Kosakata", expressions:"Ungkapan",
-        levelDescriptions:{
-          N5:"Dasar: huruf, salam, angka, benda, dan tata bahasa paling awal.",
-          N4:"Dasar lanjutan: kehidupan sehari-hari, arah, kebiasaan, dan kanji sederhana.",
-          N3:"Menengah: teks biasa, ungkapan, topik sosial, dan tata bahasa kompleks.",
-          N2:"Menengah atas: percakapan alami, artikel, surat, dan nuansa makna.",
-          N1:"Lanjutan: bahasa akademik, sastra, opini, tata bahasa abstrak, dan kanji sulit."
-        }
-      },
-      ja: {
-        navLessons:"JLPTレッスン", navWords:"単語", navQuiz:"クイズ",
-        eyebrow:"🐉 JLPT N5からN1までの旅",
-        heroTitle:"日本語を<em>一歩ずつマスターしよう。</em>",
-        intro:"初級から上級まで、単語、文法、漢字、読解、聴解、試験パターンを学びます。",
-        startButton:"JLPTレベルを選ぶ ↓", wordsButton:"単語を検索",
-        lessonsTitle:"JLPT N5〜N1の教材", lessonsDesc:"レベルと教材を選ぶと、概要と練習が表示されます。",
-        vocabTitle:"語彙ライブラリー", vocabDesc:"単語を検索してお気に入りを保存できます。JLPTレベルで絞り込めます。",
-        search:"単語や意味を検索…", favorites:"♡ お気に入り", allCategories:"すべて",
-        everyday:"日常", greeting:"あいさつ", travel:"旅行", study:"勉強",
-        quizTitle:"クイッククイズ", quizDesc:"すべてのJLPTレベルから単語を練習します。",
-        startQuiz:"クイズを始める →", nextQuestion:"次の問題 →",
-        dailyTitle:"今日の表現", dailyDesc:"毎日の会話でこの表現を使ってみましょう。",
-        footer:"毎日少しずつ学ぼう 🌸", noResults:"該当する単語はありません。",
-        completed:"✓ 完了", openLesson:"教材を見る →", markComplete:"完了にする ✓",
-        completeToast:"教材を完了しました！ 🌸",
-        quizPrompt:"この言葉の意味は何ですか？", correct:"正解！すばらしい 🎉",
-        incorrect:"残念。正解は：", score:"スコア",
-        flipCard:"カードを押して裏返す",
-        levelOverview:"レベル概要",
-        listen:"聴解", reading:"読解", grammar:"文法",
-        kanji:"漢字", vocabulary:"語彙", expressions:"表現",
-        levelDescriptions:{
-          N5:"基礎：文字、あいさつ、数字、物、初歩の文法。",
-          N4:"基礎応用：日常生活、道案内、習慣、簡単な漢字。",
-          N3:"中級：一般的な文章、表現、社会的な話題、複雑な文法。",
-          N2:"中級上：自然な会話、記事、手紙、意味のニュアンス。",
-          N1:"上級：学術的な文章、文学、意見、抽象的文法、難しい漢字。"
-        }
-      }
+    const lessons = {
+      N5: [["あ","Hiragana","46 huruf dasar"],["文","Tata bahasa dasar","です・ます・は"],["日","Kanji dasar","Hari dan angka"],["語","Kosakata dasar","Kata sehari-hari"],["挨","Salam","Ungkapan sederhana"],["読","Membaca","Kalimat pendek"],["聞","Mendengarkan","Pelafalan dasar"],["会","Percakapan","Frasa praktis"]],
+      N4: [["は","Partikel lanjutan","は・が・に・へ"],["て","Bentuk て","Permintaan dan urutan"],["毎","Kanji harian","Makanan dan arah"],["比","Perbandingan","Lebih dan paling"],["習","Kebiasaan","よく・ときどき"],["道","Petunjuk arah","まっすぐ・右"],["話","Cerita singkat","Paragraf pendek"],["旅","Perjalanan","Transportasi"]],
+      N3: [["文","Tata bahasa menengah","ため・ところ"],["漢","Kanji menengah","Kata majemuk"],["読","Bacaan menengah","Pengumuman"],["聞","Mendengar","Percakapan alami"],["ば","Kalimat syarat","ば・たら・なら"],["受","Bentuk pasif","受身"],["使","Kausatif","～させる"],["意","Menyatakan pendapat","と思う・ようだ"]],
+      N2: [["敬","Bahasa hormat","Keigo dasar"],["難","Kanji lanjutan","Beragam bacaan"],["論","Bacaan panjang","Artikel dan surat"],["会","Audio kompleks","Pidato singkat"],["然","Nuansa","に違いない・はず"],["式","Bahasa formal","～において"],["口","Percakapan","Kata penghubung"],["慣","Idiom","Ungkapan tetap"]],
+      N1: [["法","Tata bahasa abstrak","にかかわらず"],["難","Kanji tingkat atas","Bacaan khusus"],["論","Bacaan akademik","Argumen dan kritik"],["講","Ceramah","Bahasa cepat"],["微","Nuansa tingkat tinggi","Makna implisit"],["公","Bahasa institusi","Dokumen formal"],["文","Literatur","Gaya penulis"],["策","Strategi ujian","Analisis pilihan"]]
     };
-
-    const levelLessons = {
-      N5:[
-        {id:"hiragana",icon:"あ",title:"Hiragana / ひらがな",desc:"46 huruf dasar"},
-        {id:"basic-grammar",icon:"文",title:"Tata bahasa dasar",desc:"です・ます・は"},
-        {id:"basic-kanji",icon:"日",title:"Kanji dasar",desc:"Hari dan angka"},
-        {id:"basic-vocab",icon:"語",title:"Kosakata dasar",desc:"Hari-hari awal"},
-        {id:"greetings",icon:"挨",title:"Salam",desc:"Kehidupan sehari-hari"},
-        {id:"reading",icon:"読",title:"Membaca",desc:"Kalimat pendek"},
-        {id:"listen",icon:"聞",title:"Mendengarkan",desc:"Suara dasar"},
-        {id:"expressions",icon:"会",title:"Ungkapan",desc:"Percakapan sederhana"}
-      ],
-      N4:[
-        {id:"particles",icon:"は",title:"Partikel lanjutan",desc:"は・が・に・へ"},
-        {id:"te-form",icon:"て",title:"Bentuk て",desc:"Permintaan dan urutan"},
-        {id:"daily-kanji",icon:"毎",title:"Kanji harian",desc:"Makanan dan arah"},
-        {id:"comparison",icon:"比",title:"Perbandingan",desc:"Semakin / lebih"},
-        {id:"habits",icon:"習",title:"Kebiasaan",desc:"よく・ときどき"},
-        {id:"directions",icon:"道",title:"Petunjuk arah",desc:"まっすぐ・右"},
-        {id:"stories",icon:"話",title:"Cerita singkat",desc:"Paragraf pendek"},
-        {id:"travel",icon:"旅",title:"Perjalanan",desc:"Transportasi"}
-      ],
-      N3:[
-        {id:"n3-grammar",icon:"文",title:"Dokumen tata bahasa",desc:"ため・ところ"},
-        {id:"n3-kanji",icon:"漢",title:"Kanji menengah",desc:"Kata majemuk"},
-        {id:"n3-read",icon:"読",title:"Bacaan menengah",desc:"Pengumuman"},
-        {id:"n3-listen",icon:"聞",title:"Mendengar",desc:"Percakapan alami"},
-        {id:"conditionals",icon:"ば",title:"Kalimat syarat",desc:"ば・たら・なら"},
-        {id:"passive",icon:"受",title:"Pasif",desc:"Bentuk受身"},
-        {id:"causative",icon:"使",title:"Kausatif",desc:"～させる"},
-        {id:"opinions",icon:"意",title:"Pendapat",desc:"と思う・ようだ"}
-      ],
-      N2:[
-        {id:"honorific",icon:"敬",title:"Bahasa hormat",desc:"Keigo dasar"},
-        {id:"n2-kanji",icon:"難",title:"Kanji lanjutan",desc:"Membaca banyak arti"},
-        {id:"n2-read",icon:"論",title:"Bacaan panjang",desc:"Artikel dan surat"},
-        {id:"n2-listen",icon:"会",title:"Audio kompleks",desc:"Pidato singkat"},
-        {id:"nuance",icon:"然",title:"Nuansa",desc:"に違いない・はず"},
-        {id:"formal",icon:"式",title:"Bahasa formal",desc:"~において"},
-        {id:"colloquial",icon:"口",title:"Percakapan",desc:"Kata penghubung"},
-        {id:"idioms",icon:"慣",title:"Idiom",desc:"Ungkapan tetap"}
-      ],
-      N1:[
-        {id:"n1-grammar",icon:"法",title:"Tata bahasa abstrak",desc:"にかかわらず"},
-        {id:"n1-kanji",icon:"難",title:"Kanji tingkat atas",desc:"Bacaan khusus"},
-        {id:"n1-read",icon:"論",title:"Bacaan akademik",desc:"Argumen dan kritik"},
-        {id:"n1-listen",icon:"講",title:"Ceramah",desc:"Bahasa cepat"},
-        {id:"n1-nuance",icon:"微",title:"Nuansa tingkat tinggi",desc:"Makna implisit"},
-        {id:"n1-formal",icon:"公",title:"Bahasa institusi",desc:"Dokumen formal"},
-        {id:"n1-literature",icon:"文",title:"Literatur",desc:"Gaya penulis"},
-        {id:"n1-strategy",icon:"策",title:"Strategi ujian",desc:"Analisis pilihan"}
-      ]
-    };
-
     const vocab = [
-      {jp:"こんにちは",romaji:"konnichiwa",id:"Halo",ja:"こんにちは",category:"greeting",level:"N5"},
-      {jp:"ありがとう",romaji:"arigatou",id:"Terima kasih",ja:"ありがとう",category:"greeting",level:"N5"},
-      {jp:"すみません",romaji:"sumimasen",id:"Permisi / maaf",ja:"すみません",category:"greeting",level:"N5"},
-      {jp:"友達",romaji:"tomodachi",id:"Teman",ja:"友達",category:"everyday",level:"N5"},
-      {jp:"駅",romaji:"eki",id:"Stasiun",ja:"駅",category:"travel",level:"N5"},
-      {jp:"電車",romaji:"densha",id:"Kereta",ja:"電車",category:"travel",level:"N5"},
-      {jp:"勉強",romaji:"benkyou",id:"Belajar",ja:"勉強",category:"study",level:"N5"},
-      {jp:"経験",romaji:"keiken",id:"Pengalaman",ja:"経験",category:"study",level:"N4"},
-      {jp:"案内",romaji:"annai",id:"Petunjuk",ja:"案内",category:"travel",level:"N4"},
-      {jp:"必要",romaji:"hitsuyou",id:"Perlu",ja:"必要",category:"everyday",level:"N4"},
-      {jp:"複雑",romaji:"fukuzatsu",id:"Rumit",ja:"複雑",category:"everyday",level:"N3"},
-      {jp:"理解",romaji:"rikai",id:"Pemahaman",ja:"理解",category:"study",level:"N3"},
-      {jp:"条件",romaji:"jouken",id:"Syarat",ja:"条件",category:"study",level:"N3"},
-      {jp:"曖昧",romaji:"aimai",id:"Tidak jelas / ambigu",ja:"曖昧",category:"everyday",level:"N2"},
-      {jp:"把握",romaji:"haaku",id:"Memahami secara menyeluruh",ja:"把握",category:"study",level:"N2"},
-      {jp:"所見",romaji:"shoken",id:"Pendapat / pandangan",ja:"所見",category:"study",level:"N2"},
-      {jp:"是正",romaji:"zesei",id:"Memperbaiki / koreksi",ja:"是正",category:"study",level:"N1"},
-      {jp:"憂慮",romaji:"yuuryo",id:"Keprihatinan",ja:"憂慮",category:"everyday",level:"N1"},
-      {jp:"包括的",romaji:"houkateki",id:"Komprehensif",ja:"包括的",category:"study",level:"N1"},
-      {jp:"相互作用",romaji:"sougo sayou",id:"Interaksi timbal balik",ja:"相互作用",category:"study",level:"N1"}
+      {jp:"こんにちは",romaji:"konnichiwa",id:"Halo",ja:"こんにちは",category:"greeting",level:"N5"},{jp:"ありがとう",romaji:"arigatou",id:"Terima kasih",ja:"ありがとう",category:"greeting",level:"N5"},{jp:"すみません",romaji:"sumimasen",id:"Permisi / maaf",ja:"すみません",category:"greeting",level:"N5"},{jp:"友達",romaji:"tomodachi",id:"Teman",ja:"友達",category:"everyday",level:"N5"},{jp:"駅",romaji:"eki",id:"Stasiun",ja:"駅",category:"travel",level:"N5"},{jp:"電車",romaji:"densha",id:"Kereta",ja:"電車",category:"travel",level:"N5"},{jp:"勉強",romaji:"benkyou",id:"Belajar",ja:"勉強",category:"study",level:"N5"},{jp:"経験",romaji:"keiken",id:"Pengalaman",ja:"経験",category:"study",level:"N4"},{jp:"案内",romaji:"annai",id:"Petunjuk",ja:"案内",category:"travel",level:"N4"},{jp:"必要",romaji:"hitsuyou",id:"Perlu",ja:"必要",category:"everyday",level:"N4"},{jp:"複雑",romaji:"fukuzatsu",id:"Rumit",ja:"複雑",category:"everyday",level:"N3"},{jp:"理解",romaji:"rikai",id:"Pemahaman",ja:"理解",category:"study",level:"N3"},{jp:"条件",romaji:"jouken",id:"Syarat",ja:"条件",category:"study",level:"N3"},{jp:"曖昧",romaji:"aimai",id:"Tidak jelas / ambigu",ja:"曖昧",category:"everyday",level:"N2"},{jp:"把握",romaji:"haaku",id:"Memahami secara menyeluruh",ja:"把握",category:"study",level:"N2"},{jp:"所見",romaji:"shoken",id:"Pendapat / pandangan",ja:"所見",category:"study",level:"N2"},{jp:"是正",romaji:"zesei",id:"Memperbaiki / koreksi",ja:"是正",category:"study",level:"N1"},{jp:"憂慮",romaji:"yuuryo",id:"Keprihatinan",ja:"憂慮",category:"everyday",level:"N1"},{jp:"包括的",romaji:"houkateki",id:"Komprehensif",ja:"包括的",category:"study",level:"N1"},{jp:"相互作用",romaji:"sougo sayou",id:"Interaksi timbal balik",ja:"相互作用",category:"study",level:"N1"}
     ];
-
-    let lang = localStorage.getItem("apofraem-language") || "id";
-    let activeLevel = "N5";
-    let activeLesson = null;
-    let favorites = JSON.parse(localStorage.getItem("apofraem-favorites") || "[]");
-    let completed = JSON.parse(localStorage.getItem("apofraem-completed") || "[]");
-    let favoritesOnly = false;
-    let flashIndex = 0;
-    let flashBack = false;
-    let quizScore = 0;
-    let quizCount = 0;
-    let quizAnswer = null;
-    let toastTimer;
-
-    const $ = (selector) => document.querySelector(selector);
-    const text = (key) => translations[lang][key];
-
-    function applyStaticText() {
-      document.documentElement.lang = lang;
-      document.querySelectorAll("[data-i18n]").forEach((element) => {
-        element.innerHTML = text(element.dataset.i18n);
-      });
-      document.querySelectorAll("[data-placeholder]").forEach((element) => {
-        element.placeholder = text(element.dataset.placeholder);
-      });
-      document.querySelectorAll("[data-lang]").forEach((button) => {
-        button.classList.toggle("active", button.dataset.lang === lang);
-      });
-    }
-
-    function renderLevels() {
-      $("#levelTabs").innerHTML = ["N5","N4","N3","N2","N1"].map((level) => `
-        <button type="button" class="level-tab ${activeLevel === level ? "active" : ""}" data-level="${level}">${level}</button>
-      `).join("");
-      document.querySelectorAll("[data-level]").forEach((button) => {
-        button.addEventListener("click", () => {
-          activeLevel = button.dataset.level;
-          activeLesson = null;
-          $("#lessonPanel").classList.remove("open");
-          renderLevels();
-          renderLessons();
-        });
-      });
-    }
-
-    function lessonTitle(lesson) {
-      if (lang === "ja") {
-        return lesson.title
-          .replace("Hiragana / ひらがな","ひらがな")
-          .replace("Tata bahasa dasar","基礎文法")
-          .replace("Kanji dasar","基本漢字")
-          .replace("Kosakata dasar","基本語彙")
-          .replace("Salam","あいさつ")
-          .replace("Membaca","読解")
-          .replace("Mendengarkan","聴解")
-          .replace("Ungkapan","表現");
-      }
-      return lesson.title;
-    }
-
-    function renderLessons() {
-      $("#lessonGrid").innerHTML = levelLessons[activeLevel].map((lesson) => `
-        <button type="button" class="lesson-card ${activeLesson === lesson.id ? "selected" : ""}" data-lesson="${lesson.id}">
-          <span class="lesson-icon">${lesson.icon}</span>
-          <h3>${lessonTitle(lesson)}</h3>
-          <p>${lang === "ja" ? "文法・単語・練習の${lesson.desc}" : lesson.desc}</p>
-          <span class="lesson-status">${completed.includes(`${activeLevel}-${lesson.id}`) ? text("completed") : text("openLesson")}</span>
-        </button>
-      `).join("");
-      document.querySelectorAll("[data-lesson]").forEach((button) => {
-        button.addEventListener("click", () => openLesson(button.dataset.lesson));
-      });
-    }
-
-    function openLesson(id) {
-      activeLesson = id;
-      renderLessons();
-      const panel = $("#lessonPanel");
-      panel.classList.remove("open");
-      void panel.offsetWidth;
-      panel.classList.add("open");
-
-      const lesson = levelLessons[activeLevel].find((item) => item.id === id);
-      const items = buildLessonItems(id);
-      panel.innerHTML = `
-        <div class="panel-top">
-          <div>
-            <h3>${lessonTitle(lesson)} · ${activeLevel}</h3>
-            <p>${text("levelOverview")}: ${translations[lang].levelDescriptions[activeLevel]}</p>
-          </div>
-          <button type="button" class="btn small" id="completeLesson">
-            ${completed.includes(`${activeLevel}-${id}`) ? text("completed") : text("markComplete")}
-          </button>
-        </div>
-        <div class="panel-content">${items}</div>
-        <div class="flash-card" id="flashCard" role="button" tabindex="0">
-          ${text("flipCard")}
-        </div>`;
-
-      $("#completeLesson").addEventListener("click", () => {
-        const key = `${activeLevel}-${id}`;
-        if (!completed.includes(key)) completed.push(key);
-        localStorage.setItem("apofraem-completed", JSON.stringify(completed));
-        renderLessons();
-        openLesson(id);
-        showToast(text("completeToast"));
-      });
-
-      setupFlashCard();
-      panel.scrollIntoView({behavior:"smooth", block:"nearest"});
-    }
-
-    function buildLessonItems(id) {
-      const isKanji = id.includes("kanji") || ["hiragana","basic-kanji","daily-kanji","n3-kanji","n2-kanji","n1-kanji"].includes(id);
-      if (isKanji) {
-        const items = activeLevel === "N5"
-          ? [["日","hi / nichi"],["人","hito"],["本","hon"],["年","toshi"],["月","tsuki"],["一","ichi"],["二","ni"],["三","san"],["水","mizu"],["食","taberu"]]
-          : activeLevel === "N4"
-          ? [["駅","eki"],["旅","tabi"],["朝","asa"],["道","michi"],["習","narau"],["経験","keiken"],["必要","hitsuyou"],["会社","kaisha"],["便利","benri"],["説明","setsumei"]]
-          : activeLevel === "N3"
-          ? [["複雑","fukuzatsu"],["理解","rikai"],["条件","jouken"],["安全","anzen"],["環境","kankyou"],["結果","kekka"],["比較","hikaku"],["責任","sekinin"],["印象","inshou"],["判断","handan"]]
-          : activeLevel === "N2"
-          ? [["曖昧","aimai"],["把握","haaku"],["所見","shoken"],["是正","zesei"],["曖昧","aimai"],["施策","shisaku"],["規模","kibo"],["調査","chousa"],["影響","eikyou"],["促進","sokushin"]]
-          : [["憂慮","yuuryo"],["包括的","houkateki"],["相互作用","sougo sayou"],["是正","zesei"],["顕著","kencho"],["緊密","kinmitsu"],["潜在","senzai"],["乖離","kairi"],["審議","shingi"],["整合","seigou"]];
-        return `<div class="lesson-grid">${items.map(([kanji,reading]) =>
-          `<button type="button" class="lesson-item"><strong>${kanji}</strong><small>${reading}</small></button>`
-        ).join("")}</div><div class="lesson-note">${text("levelOverview")}: ${translations[lang].levelDescriptions[activeLevel]}</div>`;
-      }
-
-      if (id.includes("read") || id.includes("stories")) {
-        return `<div class="example-list">
-          <div class="example"><strong>今日は図書館へ行きます。</strong><span>${lang === "id" ? "Hari ini saya pergi ke perpustakaan." : "今日は図書館に行きます。"}</span></div>
-          <div class="example"><strong>記事を読んで、意見をまとめます。</strong><span>${lang === "id" ? "Baca artikel lalu ringkas pendapatnya." : "記事を読んで意見をまとめます。"}</span></div>
-          <div class="example"><strong>駅の案内を確認してください。</strong><span>${lang === "id" ? "Harap periksa petunjuk di stasiun." : "駅の案内を確認してください。"}</span></div>
-        </div><div class="lesson-note">${lang === "id" ? "Latihan: tandai ide utama, kata kunci, dan kalimat simpulan." : "練習：主題、キーワード、結論の文を見つけましょう。"}</div>`;
-      }
-
-      if (id.includes("listen") || id === "listening") {
-        return `<div class="grammar-box">
-          <strong>${text("listen")}</strong><br>
-          <p>${lang === "id" ? "Dengarkan sebuah percakapan, catat siapa, di mana, dan apa keputusan akhirnya." : "会話を聞いて、だれが、どこで、何を決めたかをメモしましょう。"}</p>
-          <div class="example">人：駅はどこですか？ / 相手：駅はこの道をまっすぐです。</div>
-        </div>`;
-      }
-
-      if (id.includes("grammar") || id.includes("particles") || id.includes("form") || id.includes("condition") || id.includes("passive") || id.includes("causative")) {
-        const grammarExamples = lang === "id"
-          ? ["わたしは学生です。 — Saya adalah pelajar.","本を読みます。 — Saya membaca buku.","雨が降ったら、家にいます。 — Jika hujan turun, saya tetap di rumah."]
-          : ["わたしは学生です。 — 私は学生です。","本を読みます。 — 本を読みます。","雨が降ったら、家にいます。 — 雨が降れば家にいます。"];
-        return `<div class="grammar-box">
-          <strong>${text("grammar")}</strong><br>
-          <code>主語 は 〜です / 〜ます / 〜たら</code>
-          <ul>${grammarExamples.map((item) => `<li>${item}</li>`).join("")}</ul>
-          <div class="lesson-note">${text("levelOverview")}: ${translations[lang].levelDescriptions[activeLevel]}</div>
-        </div>`;
-      }
-
-      const examples = lang === "id"
-        ? [["こんにちは","Halo"],["ありがとう","Terima kasih"],["必要です","Perlu"],["大切","Penting"],["一生懸命","Sepenuh hati"]]
-        : [["こんにちは","こんにちは"],["ありがとう","ありがとう"],["必要です","必要です"],["大切","大切"],["一生懸命","一生懸命"]];
-      return `<div class="example-list">${examples.map(([jp,meaning]) =>
-        `<div class="example"><strong>${jp}</strong><span>${meaning}</span></div>`
-      ).join("")}</div><div class="lesson-note">${translations[lang].levelDescriptions[activeLevel]}</div>`;
-    }
-
-    function setupFlashCard() {
-      const cards = vocab.filter((word) => word.level === activeLevel);
-      const pool = cards.length ? cards : vocab;
-      flashIndex = 0;
-      flashBack = false;
-      const card = $("#flashCard");
-      function renderCard() {
-        const word = pool[flashIndex % pool.length];
-        card.innerHTML = flashBack
-          ? `<div><div class="flash-card big">${word.romaji}</div><div class="lesson-note">${word[lang]} · ${word.level}</div></div>`
-          : `<div><div class="flash-card big">${word.jp}</div><div class="lesson-note">${text("flipCard")}</div></div>`;
-      }
-      card.onclick = () => { flashBack = !flashBack; renderCard(); };
-      card.onkeydown = (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          flashBack = !flashBack;
-          renderCard();
-        }
-      };
-      card.ondblclick = () => {
-        flashIndex++;
-        flashBack = false;
-        renderCard();
-      };
-      renderCard();
-    }
-
-    function renderCategories() {
-      const current = $("#categoryFilter").value || "all";
-      const entries = [
-        ["all",text("allCategories")],["everyday",text("everyday")],
-        ["greeting",text("greeting")],["travel",text("travel")],["study",text("study")]
-      ];
-      $("#categoryFilter").innerHTML = entries.map(([value,label]) => `<option value="${value}">${label}</option>`).join("");
-      $("#categoryFilter").value = entries.some(([value]) => value === current) ? current : "all";
-    }
-
-    function renderWords() {
-      const query = $("#searchInput").value.toLowerCase().trim();
-      const category = $("#categoryFilter").value || "all";
-      const level = $("#levelFilter").value || "all";
-      const filtered = vocab.filter((word) =>
-        [word.jp,word.romaji,word.id,word.ja].some((value) => value.toLowerCase().includes(query)) &&
-        (category === "all" || word.category === category) &&
-        (level === "all" || word.level === level) &&
-        (!favoritesOnly || favorites.includes(word.jp))
-      );
-      if (!filtered.length) {
-        $("#wordGrid").innerHTML = `<div class="empty">${text("noResults")}</div>`;
-        return;
-      }
-      $("#wordGrid").innerHTML = filtered.map((word) => {
-        const saved = favorites.includes(word.jp);
-        return `<article class="word-card">
-          <div class="word-top">
-            <div><div class="japanese">${word.jp}</div><div class="romaji">${word.romaji} · ${word.level}</div></div>
-            <button type="button" class="heart ${saved ? "saved" : ""}" data-favorite="${word.jp}" aria-label="Favorite">${saved ? "♥" : "♡"}</button>
-          </div>
-          <div class="meaning">${word[lang]}</div>
-        </article>`;
-      }).join("");
-      document.querySelectorAll("[data-favorite]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const jp = button.dataset.favorite;
-          favorites = favorites.includes(jp) ? favorites.filter((item) => item !== jp) : [...favorites,jp];
-          localStorage.setItem("apofraem-favorites",JSON.stringify(favorites));
-          renderWords();
-        });
-      });
-    }
-
-    function startQuiz() {
-      $("#quizBox").hidden = false;
-      quizAnswer = vocab[Math.floor(Math.random() * vocab.length)];
-      const wrong = vocab.filter((word) => word.jp !== quizAnswer.jp).sort(() => Math.random() - .5).slice(0,3);
-      const choices = [...wrong,quizAnswer].sort(() => Math.random() - .5);
-      $("#quizScore").textContent = `${text("score")}: ${quizScore} / ${quizCount}`;
-      $("#quizQuestion").textContent = `${text("quizPrompt")} “${quizAnswer.jp}” (${quizAnswer.romaji})`;
-      $("#quizFeedback").textContent = "";
-      $("#nextQuiz").hidden = true;
-      $("#quizChoices").innerHTML = choices.map((word) =>
-        `<button type="button" class="choice" data-answer="${word.jp}">${word[lang]}</button>`
-      ).join("");
-      document.querySelectorAll("[data-answer]").forEach((button) => {
-        button.addEventListener("click", () => {
-          document.querySelectorAll("[data-answer]").forEach((choice) => {
-            choice.disabled = true;
-            if (choice.dataset.answer === quizAnswer.jp) choice.classList.add("correct");
-          });
-          const correct = button.dataset.answer === quizAnswer.jp;
-          if (!correct) button.classList.add("incorrect");
-          if (correct) quizScore++;
-          quizCount++;
-          $("#quizScore").textContent = `${text("score")}: ${quizScore} / ${quizCount}`;
-          $("#quizFeedback").textContent = correct ? text("correct") : `${text("incorrect")} ${quizAnswer[lang]}`;
-          $("#nextQuiz").hidden = false;
-        });
-      });
-      $("#quizBox").scrollIntoView({behavior:"smooth",block:"nearest"});
-    }
-
-    function showToast(message) {
-      const toast = $("#toast");
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove("show"),2200);
-    }
-
-    function applyLanguage() {
-      applyStaticText();
-      renderLevels();
-      renderLessons();
-      renderCategories();
-      renderWords();
-      if (activeLesson) openLesson(activeLesson);
-      if (!$("#quizBox").hidden) startQuiz();
-    }
-
-    document.querySelectorAll("[data-lang]").forEach((button) => {
-      button.addEventListener("click", () => {
-        lang = button.dataset.lang;
-        localStorage.setItem("apofraem-language",lang);
-        applyLanguage();
-        showToast(lang === "id" ? "Bahasa diubah ke Indonesia" : "言語を日本語に変更しました");
-      });
-    });
-
-    $("#searchInput").addEventListener("input",renderWords);
-    $("#categoryFilter").addEventListener("change",renderWords);
-    $("#levelFilter").addEventListener("change",renderWords);
-    $("#favoritesButton").addEventListener("click",(event) => {
-      favoritesOnly = !favoritesOnly;
-      event.currentTarget.style.background = favoritesOnly ? "#6540b7" : "";
-      event.currentTarget.style.color = favoritesOnly ? "white" : "";
-      renderWords();
-    });
-    $("#startQuiz").addEventListener("click",startQuiz);
-    $("#nextQuiz").addEventListener("click",startQuiz);
-    $("#year").textContent = new Date().getFullYear();
-
-    applyLanguage();
+    const labels = {id:{everyday:"Sehari-hari",greeting:"Salam",travel:"Perjalanan",study:"Sekolah",all:"Semua kategori"},ja:{everyday:"日常",greeting:"あいさつ",travel:"旅行",study:"勉強",all:"すべて"}};
+    let lang = localStorage.getItem("apofraem-language") || "id", activeLevel = "N5", favorites = JSON.parse(localStorage.getItem("apofraem-favorites") || "[]"), favoritesOnly = false;
+    let profile = {name:"Profil",bio:"",photo:"",voice:"female",...JSON.parse(localStorage.getItem("apofraem-profile") || "{}")};
+    let quizAnswer = null, quizScore = 0, quizCount = 0, toastTimer;
+    const $ = (s) => document.querySelector(s);
+    const safeStore = (key,value) => { try { localStorage.setItem(key,value); return true; } catch { showToast("Penyimpanan perangkat penuh. Coba foto yang lebih kecil."); return false; } };
+    function showToast(message) { const t=$("#toast");t.textContent=message;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2500); }
+    function renderProfile() { $("#navName").textContent=profile.name || "Profil";$("#navAvatar").src=profile.photo || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ctext y='30' font-size='30'%3E🌸%3C/text%3E%3C/svg%3E";$("#profilePhoto").src=profile.photo || $("#navAvatar").src; }
+    function renderLevels() { $("#levelTabs").innerHTML=Object.keys(lessons).map(level=>`<button class="level-tab ${level===activeLevel?'active':''}" data-level="${level}" type="button">${level}</button>`).join("");document.querySelectorAll("[data-level]").forEach(b=>b.onclick=()=>{activeLevel=b.dataset.level;renderLevels();renderLessons();$("#lessonPanel").classList.remove("open");}); }
+    function renderLessons() { $("#lessonGrid").innerHTML=lessons[activeLevel].map(([icon,title,desc],i)=>`<button class="lesson-card" type="button" data-lesson-index="${i}"><span class="lesson-icon">${icon}</span><h3>${title}</h3><p>${desc}</p></button>`).join("");document.querySelectorAll("[data-lesson-index]").forEach(b=>b.onclick=()=>{const item=lessons[activeLevel][Number(b.dataset.lessonIndex)];document.querySelectorAll(".lesson-card").forEach(card=>card.classList.remove("selected"));b.classList.add("selected");const panel=$("#lessonPanel");panel.innerHTML=`<h3>${item[1]} · ${activeLevel}</h3><p>${item[2]} — Pelajari contoh dan praktikkan sedikit demi sedikit.</p><div class="lesson-note">Tip belajar: baca contoh dengan suara lantang, lalu ulangi sampai terasa alami. Tekan tombol untuk mencoba pelafalan.</div><p><button class="btn secondary small speak-btn" data-speak="${item[1]}">🔊 Dengarkan pelafalan</button></p>`;panel.classList.add("open");panel.querySelector(".speak-btn").onclick=()=>speak(item[1]);panel.scrollIntoView({behavior:"smooth",block:"nearest"});}); }
+    function renderCategories() { const selected=$("#categoryFilter").value || "all";$("#categoryFilter").innerHTML=Object.keys(labels[lang]).map(key=>`<option value="${key}">${labels[lang][key]}</option>`).join("");$("#categoryFilter").value=selected; }
+    function renderWords() { const query=$("#searchInput").value.toLowerCase().trim(), category=$("#categoryFilter").value || "all", level=$("#levelFilter").value || "all";const matches=vocab.filter(w=>[w.jp,w.romaji,w.id,w.ja].some(v=>v.toLowerCase().includes(query))&&(category==="all"||w.category===category)&&(level==="all"||w.level===level)&&(!favoritesOnly||favorites.includes(w.jp)));if(!matches.length){$("#wordGrid").innerHTML=`<div class="empty">Tidak ada kosakata yang cocok.</div>`;return;}$("#wordGrid").innerHTML=matches.map(w=>{const saved=favorites.includes(w.jp);return `<article class="word-card"><div class="word-top"><div><div class="japanese">${w.jp}</div><div class="romaji">${w.romaji} · ${w.level}</div></div><div class="word-actions"><button type="button" class="icon-btn speak-btn" data-speak="${w.jp}" aria-label="Dengarkan ${w.jp}">🔊</button><button type="button" class="icon-btn heart ${saved?'saved':''}" data-favorite="${w.jp}" aria-label="Simpan favorit">${saved?'♥':'♡'}</button></div></div><div class="meaning">${w[lang]}</div></article>`;}).join("");document.querySelectorAll("[data-favorite]").forEach(b=>b.onclick=()=>{const word=b.dataset.favorite;favorites=favorites.includes(word)?favorites.filter(x=>x!==word):[...favorites,word];safeStore("apofraem-favorites",JSON.stringify(favorites));renderWords();});document.querySelectorAll(".speak-btn").forEach(b=>b.onclick=()=>speak(b.dataset.speak)); }
+    function femaleJapaneseVoice() { if(!("speechSynthesis" in window))return null;const voices=speechSynthesis.getVoices().filter(v=>/^ja(-|_|$)/i.test(v.lang));const likelyFemale=/female|woman|kyoko|haruka|nanami|sayaka|hikari|akari|mizuki|mei|yuna|sakura|otoya|female/i;return voices.find(v=>v.gender==="female")||voices.find(v=>likelyFemale.test(v.name)); }
+    function speak(value) { if(profile.voice!=="female") {showToast("Suara latihan sedang dimatikan di pengaturan profil.");return;}if(!("speechSynthesis" in window)){showToast("Fitur suara tidak didukung browser ini.");return;}const voice=femaleJapaneseVoice();if(!voice){showToast("Suara perempuan Jepang tidak tersedia di perangkat ini. Tidak ada suara laki-laki yang digunakan.");return;}speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(value);utterance.lang="ja-JP";utterance.voice=voice;utterance.rate=.88;speechSynthesis.speak(utterance); }
+    function startQuiz() { $("#quizBox").hidden=false;quizAnswer=vocab[Math.floor(Math.random()*vocab.length)];const wrong=vocab.filter(w=>w.jp!==quizAnswer.jp).sort(()=>Math.random()-.5).slice(0,3);const choices=[...wrong,quizAnswer].sort(()=>Math.random()-.5);$("#quizScore").textContent=`Skor: ${quizScore} / ${quizCount}`;$("#quizQuestion").textContent=`Apa arti kata ini? “${quizAnswer.jp}”`;$("#quizFeedback").textContent="";$("#nextQuiz").hidden=true;$("#quizChoices").innerHTML=choices.map(w=>`<button class="choice" type="button" data-answer="${w.jp}">${w[lang]}</button>`).join("");document.querySelectorAll("[data-answer]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-answer]").forEach(c=>{c.disabled=true;if(c.dataset.answer===quizAnswer.jp)c.classList.add("correct");});const correct=b.dataset.answer===quizAnswer.jp;if(!correct)b.classList.add("incorrect");if(correct)quizScore++;quizCount++;$("#quizScore").textContent=`Skor: ${quizScore} / ${quizCount}`;$("#quizFeedback").textContent=correct?"Benar! Mantap 🎉":`Belum tepat. Jawaban: ${quizAnswer[lang]}`;$("#nextQuiz").hidden=false;});$("#quizBox").scrollIntoView({behavior:"smooth",block:"nearest"}); }
+    $("#openProfile").onclick=()=>{$("#profileName").value=profile.name==="Profil"?"":profile.name;$("#profileBio").value=profile.bio;$("#voiceSetting").value=profile.voice;$("#profileDialog").showModal();};
+    $("#closeProfile").onclick=$("#cancelProfile").onclick=()=>$("#profileDialog").close();
+    $("#photoPicker").addEventListener("change",event=>{const file=event.target.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){showToast("Pilih file gambar dari galeri.");return;}const reader=new FileReader();reader.onload=()=>{const image=new Image();image.onload=()=>{const canvas=document.createElement("canvas"),max=420,scale=Math.min(1,max/Math.max(image.width,image.height));canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);profile.photo=canvas.toDataURL("image/jpeg",.78);$("#profilePhoto").src=profile.photo;};image.src=reader.result;};reader.readAsDataURL(file);});
+    $("#profileForm").addEventListener("submit",event=>{event.preventDefault();profile.name=$("#profileName").value.trim()||"Profil";profile.bio=$("#profileBio").value.trim();profile.voice=$("#voiceSetting").value;safeStore("apofraem-profile",JSON.stringify(profile));renderProfile();$("#profileDialog").close();showToast("Profil berhasil disimpan 🌸");});
+    document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;safeStore("apofraem-language",lang);document.documentElement.lang=lang;document.querySelectorAll("[data-lang]").forEach(x=>x.classList.toggle("active",x===b));renderCategories();renderWords();});
+    $("#searchInput").addEventListener("input",renderWords);$("#categoryFilter").addEventListener("change",renderWords);$("#levelFilter").addEventListener("change",renderWords);$("#favoritesButton").onclick=()=>{favoritesOnly=!favoritesOnly;$("#favoritesButton").classList.toggle("btn",favoritesOnly);$("#favoritesButton").textContent=favoritesOnly?"♥ Semua kata":"♡ Favorit";renderWords();};$("#startQuiz").onclick=startQuiz;$("#nextQuiz").onclick=startQuiz;
+    renderProfile();renderLevels();renderLessons();renderCategories();renderWords();$("#year").textContent=new Date().getFullYear();
   </script>
 </body>
 </html>
